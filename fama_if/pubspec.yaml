@@ -1,0 +1,45 @@
+name: hall_if
+description: "HallIF - Ranking de Popularidade dos Alunos"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # Navegação (item 2 da especificação)
+  go_router: ^17.1.0
+
+  # Gerência de estado e reatividade (item 2 da especificação)
+  signals_flutter: ^6.3.0
+
+  # Injeção de dependências
+  auto_injector: ^2.1.1
+
+  # Armazenamento local (item 2 da especificação)
+  shared_preferences: ^2.5.4
+
+  # Comparação por valor nas entidades de domínio (Equatable)
+  equatable: ^2.0.8
+
+  # Geração de identificadores únicos para novos alunos
+  uuid: ^4.5.1
+
+  # Formatação de datas na tela de detalhes
+  intl: ^0.20.2
+
+  # Tipografia personalizada (identidade visual do app)
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

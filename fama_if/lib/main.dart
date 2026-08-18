@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:signals_flutter/signals_flutter.dart';
-
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'core/di/dependency_injection.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() {
-  // Configura todas as dependências (services, repositories, use cases,
-  // facade, viewmodels) antes de rodar o app.
+  
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
   setupDependencyInjection();
   runApp(const HallIfApp());
 }

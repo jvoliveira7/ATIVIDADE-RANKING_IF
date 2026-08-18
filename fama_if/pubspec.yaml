@@ -1,5 +1,5 @@
-name: hall_if
-description: "HallIF - Ranking de Popularidade dos Alunos"
+name: fama_if
+description: "FamaIF - Ranking de Popularidade dos Alunos (PiramidGame IFPR-Pgua)"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -10,31 +10,36 @@ dependencies:
   flutter:
     sdk: flutter
 
+  sqflite_common_ffi: ^2.3.0
+  
   cupertino_icons: ^1.0.8
 
-  # Navegação (item 2 da especificação)
+  # Navegação
   go_router: ^17.1.0
 
-  # Gerência de estado e reatividade (item 2 da especificação)
+  # Gerência de estado e reatividade
   signals_flutter: ^6.3.0
 
   # Injeção de dependências
   auto_injector: ^2.1.1
 
-  # Armazenamento local (item 2 da especificação)
-  shared_preferences: ^2.5.4
+  # Banco de dados SQLite (substitui o shared_preferences)
+  sqflite: ^2.3.3
+  path: ^1.9.0
 
-  # Comparação por valor nas entidades de domínio (Equatable)
+  # Comparação por valor nas entidades
   equatable: ^2.0.8
 
-  # Geração de identificadores únicos para novos alunos
+  # Geração de ids únicos
   uuid: ^4.5.1
 
-  # Formatação de datas na tela de detalhes
+  # Formatação de datas
   intl: ^0.20.2
 
-  # Tipografia personalizada (identidade visual do app)
+  # Tipografia personalizada
   google_fonts: ^6.2.1
+
+  
 
 dev_dependencies:
   flutter_test:

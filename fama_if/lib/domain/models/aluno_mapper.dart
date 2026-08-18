@@ -2,9 +2,7 @@ import 'aluno.dart';
 import 'criterios_popularidade.dart';
 import 'curso.dart';
 
-/// Converte instâncias de [Aluno] para `Map<String, dynamic>` e vice-versa.
-/// É essa representação em Map que será convertida para JSON e salva no
-/// SharedPreferences (item 14 da especificação).
+
 class AlunoMapper {
   static Map<String, dynamic> toMap(Aluno aluno) {
     return {
@@ -19,6 +17,11 @@ class AlunoMapper {
   }
 
   static Aluno fromMap(Map<String, dynamic> map) {
+    final criteriosRaw = map['criterios'];
+    final criteriosMap = criteriosRaw is Map<String, dynamic>
+        ? criteriosRaw
+        : Map<String, dynamic>.from(criteriosRaw as Map);
+
     return Aluno(
       id: map['id'] as String,
       nome: map['nome'] as String,
@@ -26,8 +29,14 @@ class AlunoMapper {
       turmaAno: map['turmaAno'] as int,
       apelido: map['apelido'] as String,
       dataNascimento: DateTime.parse(map['dataNascimento'] as String),
-      criterios: _criteriosFromMap(map['criterios'] as Map<String, dynamic>),
+      criterios: _criteriosFromMap(criteriosMap),
     );
+  }
+
+  ///exposto separadamente para o SQLiteService usar ao serializar
+  //Os critérios como JSON numa coluna só.
+  static Map<String, dynamic> criteriosParaMap(CriteriosPopularidade c) {
+    return _criteriosToMap(c);
   }
 
   static Map<String, dynamic> _criteriosToMap(CriteriosPopularidade c) {

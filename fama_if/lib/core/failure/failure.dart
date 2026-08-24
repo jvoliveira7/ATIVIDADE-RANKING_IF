@@ -16,7 +16,7 @@ class DefaultFailure extends Failure {
   DefaultFailure([String? msg]) : super(msg ?? AppMessages.error.defaultError);
 }
 
-/// Erro ao acessar o SharedPreferences (leitura, escrita ou remoção).
+/// Erro ao acessar o armazenamento local / banco SQLite (leitura, escrita ou remoção).
 class ApiLocalFailure extends Failure {
   ApiLocalFailure([String? msg]) : super(msg ?? AppMessages.error.apiLocalError);
 }

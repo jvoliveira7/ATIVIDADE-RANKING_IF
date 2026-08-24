@@ -24,13 +24,13 @@ final class AlunoSqliteService implements IAlunoLocalStorage {
       AppDatabase.columnApelido: aluno.apelido,
       AppDatabase.columnDataNascimento:
           aluno.dataNascimento.toIso8601String(),
-      // Os 15 critérios viram JSON numa coluna só.
+      //os 15 critérios viram JSON numa coluna só.
       AppDatabase.columnCriteriosJson:
           jsonEncode(AlunoMapper.criteriosParaMap(aluno.criterios)),
     };
   }
 
-  /// Converte uma linha do SQLite de volta para um objeto [Aluno].
+  ///converte uma linha do SQLite de volta para um objeto 
   Aluno _linhaParaAluno(Map<String, dynamic> linha) {
     return AlunoMapper.fromMap({
       'id': linha[AppDatabase.columnId],

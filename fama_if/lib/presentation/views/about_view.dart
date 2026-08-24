@@ -59,7 +59,7 @@ class AboutView extends StatelessWidget {
             titulo: 'Armazenamento dos dados',
             texto:
                 'Todos os dados são armazenados localmente no dispositivo, '
-                'utilizando o SharedPreferences. Nenhuma informação é '
+                'utilizando um banco de dados SQLite. Nenhuma informação é '
                 'enviada para a internet.',
           ),
           const _Secao(

@@ -5,10 +5,10 @@ import 'aluno_repository_interface.dart';
 
 /// Implementação do repository de Aluno.
 /// Não tem lógica própria: apenas repassa as chamadas para o service
-/// injetado (`_localStorage`), que é quem efetivamente acessa o
-/// SharedPreferences. Essa indireção é o que permite, no futuro, trocar
-/// o SharedPreferences por outra fonte de dados (ex: um banco SQLite ou
-/// uma API) sem alterar nenhuma camada acima do repository.
+/// injetado (`_localStorage`), que é quem efetivamente acessa a fonte
+/// de dados (atualmente, um banco SQLite). Essa indireção é o que
+/// permite trocar a fonte de dados (ex: outro banco local, ou uma API)
+/// sem alterar nenhuma camada acima do repository.
 final class AlunoRepositoryImpl implements IAlunoRepository {
   final IAlunoLocalStorage _localStorage;
 

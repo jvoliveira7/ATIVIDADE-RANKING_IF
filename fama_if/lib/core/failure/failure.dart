@@ -16,9 +16,14 @@ class DefaultFailure extends Failure {
   DefaultFailure([String? msg]) : super(msg ?? AppMessages.error.defaultError);
 }
 
-/// Erro ao acessar o armazenamento local / banco SQLite (leitura, escrita ou remoção).
+/// Erro ao acessar o armazenamento local (preferências, cache de sessão).
 class ApiLocalFailure extends Failure {
   ApiLocalFailure([String? msg]) : super(msg ?? AppMessages.error.apiLocalError);
+}
+
+/// Erro de comunicação com o Firestore (leitura, escrita ou remoção).
+class FirestoreFailure extends Failure {
+  FirestoreFailure([String? msg]) : super(msg ?? AppMessages.error.firestoreError);
 }
 
 /// Indica que uma busca não encontrou nenhum resultado.
@@ -56,8 +61,65 @@ class InvalidStarRatingFailure extends Failure {
       : super(msg ?? AppMessages.error.invalidStarRatingError);
 }
 
-/// Aluno não encontrado pelo identificador informado.
-class StudentNotFoundFailure extends Failure {
-  StudentNotFoundFailure([String? msg])
-      : super(msg ?? AppMessages.error.studentNotFoundError);
+/// Pessoa não encontrada pelo identificador informado.
+class PersonNotFoundFailure extends Failure {
+  PersonNotFoundFailure([String? msg])
+      : super(msg ?? AppMessages.error.personNotFoundError);
+}
+
+/// Avaliação não encontrada para o par usuário + pessoa informado.
+class EvaluationNotFoundFailure extends Failure {
+  EvaluationNotFoundFailure([String? msg])
+      : super(msg ?? AppMessages.error.evaluationNotFoundError);
+}
+
+// ---------------------------------------------------------------------------
+// Falhas de autenticação e sessão (itens 3.1 e 23 da especificação)
+// ---------------------------------------------------------------------------
+
+/// Nenhum usuário autenticado para a operação solicitada.
+class UnauthenticatedFailure extends Failure {
+  UnauthenticatedFailure([String? msg])
+      : super(msg ?? AppMessages.error.unauthenticatedError);
+}
+
+/// Sessão existente, porém expirada.
+class SessionExpiredFailure extends Failure {
+  SessionExpiredFailure([String? msg])
+      : super(msg ?? AppMessages.error.sessionExpiredError);
+}
+
+/// E-mail ou senha incorretos no login.
+class InvalidCredentialsFailure extends Failure {
+  InvalidCredentialsFailure([String? msg])
+      : super(msg ?? AppMessages.error.invalidCredentialsError);
+}
+
+/// Tentativa de cadastro com e-mail já registrado.
+class EmailAlreadyInUseFailure extends Failure {
+  EmailAlreadyInUseFailure([String? msg])
+      : super(msg ?? AppMessages.error.emailAlreadyInUseError);
+}
+
+/// Senha que não atende ao mínimo exigido pelo Firebase Authentication.
+class WeakPasswordFailure extends Failure {
+  WeakPasswordFailure([String? msg])
+      : super(msg ?? AppMessages.error.weakPasswordError);
+}
+
+/// Usuário interrompeu o fluxo de login (fechou a janela do Google, por exemplo).
+class AuthCancelledFailure extends Failure {
+  AuthCancelledFailure([String? msg])
+      : super(msg ?? AppMessages.error.authCancelledError);
+}
+
+/// Falha genérica vinda do Firebase Authentication.
+class AuthFailure extends Failure {
+  AuthFailure([String? msg]) : super(msg ?? AppMessages.error.authError);
+}
+
+/// Tentativa de avaliar a si próprio (itens 9, 14.12 e 16).
+class SelfEvaluationFailure extends Failure {
+  SelfEvaluationFailure([String? msg])
+      : super(msg ?? AppMessages.error.selfEvaluationError);
 }

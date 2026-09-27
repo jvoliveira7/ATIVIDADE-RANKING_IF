@@ -1,0 +1,90 @@
+rules_version = '2';
+
+// Regras de segurança do PiramidGame IFPR-Pgua.
+//
+// Esta é a camada de controle de sessão que não depende do aplicativo: mesmo
+// que alguém chame a API do Firestore por fora do app, as regras abaixo
+// continuam valendo. Elas repetem de propósito restrições que o app já faz,
+// porque validação só no cliente não é validação.
+//
+// Publicar com:  firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function autenticado() {
+      return request.auth != null;
+    }
+
+    function notaValida(nota) {
+      return nota is int && nota >= 1 && nota <= 5;
+    }
+
+    // Item 16: nenhuma nota fora de 1..5 e pontuação coerente com a soma.
+    function notasValidas() {
+      let d = request.resource.data;
+      return notaValida(d.resenha)
+        && notaValida(d.presencaVip)
+        && notaValida(d.aura)
+        && notaValida(d.modoParceiro)
+        && notaValida(d.carismaNatural)
+        && notaValida(d.humorDeMilhoes)
+        && notaValida(d.energiaDeGrupo)
+        && notaValida(d.criatividadeCaotica)
+        && notaValida(d.modoAtleta)
+        && notaValida(d.talentoDePalco)
+        && notaValida(d.dripEscolar)
+        && notaValida(d.coracaoDeDorama)
+        && notaValida(d.queridinhoProfessores)
+        && notaValida(d.cerebroTurbo)
+        && notaValida(d.caosControlado)
+        && d.pontuacaoTotal is int
+        && d.pontuacaoTotal >= 15
+        && d.pontuacaoTotal <= 75;
+    }
+
+    // Itens 9 e 14.12: ninguém avalia a si próprio. O vínculo entre conta e
+    // pessoa mora em `pessoas.usuarioUid`.
+    function naoEhAutoavaliacao(pessoaId) {
+      let pessoa = get(/databases/$(database)/documents/pessoas/$(pessoaId));
+      return !pessoa.data.keys().hasAny(['usuarioUid'])
+        || pessoa.data.usuarioUid != request.auth.uid;
+    }
+
+    // Perfil do usuário: qualquer autenticado lê (para exibir nomes), mas só
+    // o dono escreve o próprio documento.
+    match /usuarios/{uid} {
+      allow read: if autenticado();
+      allow create, update: if autenticado() && request.auth.uid == uid;
+      allow delete: if false;
+    }
+
+    // Pessoas são compartilhadas: todo autenticado lê, porque o ranking
+    // global depende de várias pessoas avaliarem as mesmas pessoas (item 13).
+    // Alterar e remover, só quem cadastrou.
+    match /pessoas/{pessoaId} {
+      allow read: if autenticado();
+      allow create: if autenticado()
+        && request.resource.data.criadoPor == request.auth.uid;
+      allow update, delete: if autenticado()
+        && resource.data.criadoPor == request.auth.uid;
+    }
+
+    // Avaliações: leitura liberada para autenticados (é o insumo do ranking
+    // global), escrita apenas da própria avaliação.
+    //
+    // A checagem do id do documento é o que garante, no servidor, a regra
+    // "usuário + pessoa avaliada = uma avaliação" (item 16): com o id preso
+    // ao par, não há como um mesmo usuário criar duas avaliações da mesma
+    // pessoa para inflar a média dela.
+    match /avaliacoes/{avaliacaoId} {
+      allow read: if autenticado();
+      allow create, update: if autenticado()
+        && request.resource.data.avaliadorUid == request.auth.uid
+        && avaliacaoId == request.auth.uid + '_' + request.resource.data.pessoaId
+        && notasValidas()
+        && naoEhAutoavaliacao(request.resource.data.pessoaId);
+      allow delete: if autenticado()
+        && resource.data.avaliadorUid == request.auth.uid;
+    }
+  }
+}

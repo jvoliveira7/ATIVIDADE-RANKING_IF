@@ -9,6 +9,12 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  # Snapshot do SQLite da parte 1, mantido só para consulta. Fica fora do app
+  # e seus imports relativos não resolvem mais — ver legado_parte1/README.md.
+  exclude:
+    - legado_parte1/**
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

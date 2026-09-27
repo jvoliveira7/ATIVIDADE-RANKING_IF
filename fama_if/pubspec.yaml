@@ -23,7 +23,7 @@ dependencies:
   # Injeção de dependências
   auto_injector: ^2.1.1
 
-  # Banco de dados SQLite (substitui o shared_preferences)
+  # Banco de dados SQLite (fonte de dados da parte 1, mantida trocável na DI)
   sqflite: ^2.3.3
   path: ^1.9.0
 
@@ -39,12 +39,25 @@ dependencies:
   # Tipografia personalizada
   google_fonts: ^6.2.1
 
-  
+  # Firebase: inicialização, autenticação e banco NoSQL remoto (parte 2)
+  firebase_core: ^4.15.0
+  firebase_auth: ^6.7.0
+  cloud_firestore: ^6.10.0
+
+  # Autenticação com conta Google, integrada ao Firebase Auth
+  google_sign_in: ^7.2.0
+
+  # Armazenamento local auxiliar: tema, cache de sessão (nunca dados principais)
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+
+  # Dublês do Firebase, para testar sem tocar no projeto real
+  fake_cloud_firestore: ^4.3.0
+  firebase_auth_mocks: ^0.15.2
 
 flutter:
   uses-material-design: true

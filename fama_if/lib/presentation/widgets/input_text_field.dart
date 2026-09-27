@@ -18,6 +18,12 @@ class InputTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final bool enabled;
 
+  /// Esconde o texto digitado, usado nos campos de senha (item 19).
+  final bool obscureText;
+
+  /// Botão opcional à direita do campo, como o "olho" que revela a senha.
+  final Widget? suffixIcon;
+
   const InputTextField({
     super.key,
     required this.label,
@@ -31,6 +37,8 @@ class InputTextField extends StatelessWidget {
     this.textInputAction,
     this.focusNode,
     this.enabled = true,
+    this.obscureText = false,
+    this.suffixIcon,
   });
 
   @override
@@ -45,10 +53,12 @@ class InputTextField extends StatelessWidget {
       textInputAction: textInputAction,
       inputFormatters: inputFormatters,
       onFieldSubmitted: onFieldSubmitted,
+      obscureText: obscureText,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint ?? label,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+        suffixIcon: suffixIcon,
         border: OutlineInputBorder(borderRadius: borderRadius),
         enabledBorder: OutlineInputBorder(borderRadius: borderRadius),
         focusedBorder: OutlineInputBorder(borderRadius: borderRadius),

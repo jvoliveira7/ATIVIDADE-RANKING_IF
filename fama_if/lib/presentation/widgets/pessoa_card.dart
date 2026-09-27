@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_theme.dart';
-import '../../domain/models/aluno.dart';
+import '../../domain/models/pessoa.dart';
 import 'medalha_nivel_lenda.dart';
 
-/// Card que representa um aluno, no conceito de "crachá de campus":
-/// uma faixa colorida lateral identifica o curso, e o Nível Lenda é
-/// exibido como medalha (elemento de assinatura do app). Reutilizado
-/// na tela Home (listagem, item 10.2) e na tela de Ranking (item 9),
-/// onde também recebe a posição (`posicao`) para destacar o pódio.
-class AlunoCard extends StatelessWidget {
-  final Aluno aluno;
+/// Card que representa uma pessoa, no conceito de "crachá de campus": uma
+/// faixa colorida lateral identifica o curso.
+///
+/// Diferente da primeira parte, a pessoa não carrega nota própria — quem tem
+/// pontuação é a avaliação. Por isso [pontos] é opcional: na listagem simples
+/// (item 14.6) o card aparece sem medalha, e nos rankings (itens 12 e 13) ele
+/// recebe a pontuação, a posição e o texto de rodapé com a quantidade de
+/// avaliações.
+class PessoaCard extends StatelessWidget {
+  final Pessoa pessoa;
+  final int? pontos;
   final int? posicao;
+  final String? rodape;
   final VoidCallback? onTap;
 
-  const AlunoCard({
+  const PessoaCard({
     super.key,
-    required this.aluno,
+    required this.pessoa,
+    this.pontos,
     this.posicao,
+    this.rodape,
     this.onTap,
   });
 
   Color get _corFaixa =>
-      AppTheme.corPorCurso[aluno.curso.displayName] ?? AppTheme.roxoRecreio;
+      AppTheme.corPorCurso[pessoa.curso.displayName] ?? AppTheme.roxoRecreio;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +47,14 @@ class AlunoCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
+              border: Border.all(
+                color: colorScheme.onSurface.withValues(alpha: 0.08),
+              ),
             ),
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Faixa lateral colorida (identidade do curso)
                   Container(
                     width: 8,
                     decoration: BoxDecoration(
@@ -71,7 +79,7 @@ class AlunoCard extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  aluno.nome,
+                                  pessoa.nome,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
@@ -80,7 +88,7 @@ class AlunoCard extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  '"${aluno.apelido}"',
+                                  '"${pessoa.apelido}"',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
@@ -93,19 +101,34 @@ class AlunoCard extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 6),
                                 _SeloCurso(
-                                  curso: aluno.curso.displayName,
-                                  ano: aluno.turmaAno,
+                                  curso: pessoa.curso.displayName,
+                                  ano: pessoa.turmaAno,
                                   cor: corFaixa,
                                 ),
+                                if (rodape != null) ...[
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    rodape!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                          color: colorScheme.onSurface
+                                              .withValues(alpha: 0.5),
+                                        ),
+                                  ),
+                                ],
                               ],
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          MedalhaNivelLenda(
-                            pontos: aluno.nivelLenda,
-                            posicao: posicao,
-                            tamanho: 52,
-                          ),
+                          if (pontos != null) ...[
+                            const SizedBox(width: 8),
+                            MedalhaNivelLenda(
+                              pontos: pontos!,
+                              posicao: posicao,
+                              tamanho: 52,
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -130,7 +153,8 @@ class _PosicaoNumero extends StatelessWidget {
     return Text(
       '$posicao°',
       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
           ),
     );
   }

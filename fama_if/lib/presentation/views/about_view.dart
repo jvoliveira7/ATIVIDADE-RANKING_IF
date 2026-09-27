@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../core/routes/app_routes_constants.dart';
+import '../../core/theme/app_theme.dart';
 import '../widgets/app_drawer.dart';
 
-/// Tela "Sobre o App", obrigatória pela especificação (item 13).
-/// Explica o objetivo do app, o contexto institucional, os critérios e
-/// o cálculo do Nível Lenda, além de informar sobre armazenamento local
-/// e tema claro/escuro.
+/// Tela "Sobre o App" (item 20): explica objetivo, contexto, critérios,
+/// cálculo do Nível Lenda, os dois rankings e a infraestrutura usada.
 class AboutView extends StatelessWidget {
   const AboutView({super.key});
 
@@ -18,58 +17,121 @@ class AboutView extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          const _Capa(),
+          const SizedBox(height: 24),
           const _Secao(
             icone: Icons.flag_rounded,
-            titulo: 'Objetivo',
-            texto:
-                'O HallIF (Ranking de Popularidade dos Alunos) é um aplicativo '
-                'desenvolvido em Flutter para fins didáticos. Ele permite '
-                'cadastrar alunos do IFPR - Campus Paranaguá e avaliá-los em '
-                'critérios descontraídos de convivência, destaque e '
-                'participação na turma.',
-          ),
-          const _Secao(
-            icone: Icons.school_rounded,
-            titulo: 'Contexto',
-            texto:
-                'O app foi pensado para o contexto institucional do IFPR - '
-                'Campus Paranaguá, vinculando cada aluno cadastrado a um '
-                'curso e a uma turma/ano.',
+            titulo: 'O que é',
+            texto: 'O PiramidGame IFPR-Pgua é um aplicativo desenvolvido em '
+                'Flutter para fins didáticos. Ele permite cadastrar pessoas do '
+                'IFPR – Campus Paranaguá e avaliá-las em critérios '
+                'descontraídos de convivência, destaque e participação.',
           ),
           const _Secao(
             icone: Icons.star_rounded,
-            titulo: 'Critérios de avaliação',
-            texto:
-                'Cada aluno recebe notas de 1 a 5 em 15 categorias, como '
-                'Resenha, Aura, Carisma Natural e Cérebro Turbo, entre '
-                'outras. A soma dessas notas forma o Nível Lenda, usado '
-                'para organizar o ranking geral.',
+            titulo: 'Critérios e Nível Lenda',
+            texto: 'Cada avaliação atribui notas de 1 a 5 estrelas em 15 '
+                'categorias, como Resenha, Aura, Drip Escolar e Caos '
+                'Controlado. A soma dessas notas forma o Nível Lenda, que vai '
+                'de 15 a 75 pontos.',
+          ),
+          const _Secao(
+            icone: Icons.person_search_rounded,
+            titulo: 'Ranking pessoal',
+            texto: 'Responde "na minha opinião, quem tem o maior Nível '
+                'Lenda?". Considera exclusivamente as avaliações que você '
+                'mesmo realizou — o que os outros usuários acharem não '
+                'interfere nele.',
           ),
           const _Secao(
             icone: Icons.emoji_events_rounded,
-            titulo: 'Cálculo do Nível Lenda',
-            texto:
-                'São 15 critérios, cada um valendo de 1 a 5 pontos. Por '
-                'isso, o Nível Lenda de um aluno varia de 15 (mínimo) a 75 '
-                'pontos (máximo). O ranking é ordenado automaticamente do '
-                'maior para o menor Nível Lenda.',
+            titulo: 'Ranking global',
+            texto: 'Responde "na opinião dos usuários do aplicativo, quem tem '
+                'o maior Nível Lenda?". Como a mesma pessoa pode ser avaliada '
+                'por várias pessoas, a pontuação global é a média das '
+                'avaliações recebidas, exibida junto com a quantidade de '
+                'avaliações.',
           ),
           const _Secao(
-            icone: Icons.storage_rounded,
-            titulo: 'Armazenamento dos dados',
-            texto:
-                'Todos os dados são armazenados localmente no dispositivo, '
-                'utilizando um banco de dados SQLite. Nenhuma informação é '
-                'enviada para a internet.',
+            icone: Icons.block_rounded,
+            titulo: 'Regras',
+            texto: 'Ninguém pode avaliar a si próprio, e cada usuário tem uma '
+                'única avaliação ativa para cada pessoa: para mudar de ideia, '
+                'basta alterar a avaliação que já existe, em vez de criar '
+                'outra.',
+          ),
+          const _Secao(
+            icone: Icons.cloud_rounded,
+            titulo: 'Onde ficam os dados',
+            texto: 'Os dados são armazenados remotamente no Firestore e o '
+                'acesso ao aplicativo usa o Firebase Authentication, com '
+                'e-mail e senha ou conta Google. Por isso suas informações '
+                'seguem disponíveis em outro aparelho, bastando entrar com a '
+                'mesma conta.',
           ),
           const _Secao(
             icone: Icons.dark_mode_rounded,
-            titulo: 'Tema claro e escuro',
-            texto:
-                'O aplicativo permite alternar entre tema claro e tema '
-                'escuro em tempo de execução, através do menu lateral.',
+            titulo: 'Aparência',
+            texto: 'O aplicativo permite alternar entre tema claro e tema '
+                'escuro em tempo de execução, pelo menu lateral. A preferência '
+                'fica salva no aparelho.',
           ),
+          const SizedBox(height: 16),
+          Center(
+            child: Text(
+              'IFPR · Campus Paranaguá · TADS',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.5),
+                  ),
+            ),
+          ),
+          const SizedBox(height: 24),
         ],
+      ),
+    );
+  }
+}
+
+class _Capa extends StatelessWidget {
+  const _Capa();
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: AppTheme.ouroLenda, width: 3),
+              ),
+              child: const Icon(
+                Icons.emoji_events_rounded,
+                size: 44,
+                color: AppTheme.ouroLenda,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'PiramidGame IFPR-Pgua',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Ranking de Popularidade',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -88,30 +150,33 @@ class _Secao extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icone, color: Theme.of(context).colorScheme.primary),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(icone, color: colorScheme.primary),
-                const SizedBox(width: 8),
+                Text(titulo, style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 4),
                 Text(
-                  titulo,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                  texto,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        height: 1.45,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.75),
                       ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            Text(texto, style: Theme.of(context).textTheme.bodyMedium),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

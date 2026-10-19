@@ -8,7 +8,7 @@ import '../controllers/avaliacao_viewmodel.dart';
 import '../controllers/pessoa_viewmodel.dart';
 import '../widgets/aviso_erro.dart';
 import '../widgets/campos_pessoa.dart';
-import '../widgets/criterio_slider.dart';
+import '../widgets/criterio_estrelas.dart';
 import '../widgets/medalha_nivel_lenda.dart';
 
 /// Tela de avaliação (itens 14.10 e 14.11): 15 critérios com nota de 1 a 5
@@ -112,7 +112,7 @@ class _AvaliarPessoaViewState extends State<AvaliarPessoaView> {
                   _PlacarAtual(pontos: _criterios.nivelLenda),
                   const SizedBox(height: 20),
                   ..._criterios.items.map(
-                    (item) => CriterioSlider(
+                    (item) => CriterioEstrelas(
                       nome: item.nome,
                       descricao: item.descricao,
                       valor: item.getValue(_criterios),

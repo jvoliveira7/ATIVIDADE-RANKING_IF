@@ -1,0 +1,28 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "piramidgame-ifpr-2026",
+          "appId": "1:232556044672:android:711d3c3c253635a057e165",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "piramidgame-ifpr-2026",
+          "configurations": {
+            "android": "1:232556044672:android:711d3c3c253635a057e165",
+            "ios": "1:232556044672:ios:d377790fe894f58957e165",
+            "macos": "1:232556044672:ios:d377790fe894f58957e165",
+            "web": "1:232556044672:web:9028f6a6eabee15057e165",
+            "windows": "1:232556044672:web:0d8fb67291b71ad757e165"
+          }
+        }
+      }
+    }
+  }
+}

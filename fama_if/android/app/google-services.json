@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "232556044672",
+    "project_id": "piramidgame-ifpr-2026",
+    "storage_bucket": "piramidgame-ifpr-2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232556044672:android:711d3c3c253635a057e165",
+        "android_client_info": {
+          "package_name": "br.edu.ifpr.fama_if"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232556044672-2gnu7dt74gst4es31vafko0mv4qf3vmp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.edu.ifpr.fama_if",
+            "certificate_hash": "28a798df4ed2f7dcea78f45428637f0880aeed0f"
+          }
+        },
+        {
+          "client_id": "232556044672-o39h6mildkvnp23dieknfg4ajjnid934.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAlpjYPSeAj2SttFbjSg8eGzeu_CtlfMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232556044672-o39h6mildkvnp23dieknfg4ajjnid934.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "232556044672-u7skjj65cld6gj8kmhu0h3pfqb7c652h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.edu.ifpr.famaIf"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

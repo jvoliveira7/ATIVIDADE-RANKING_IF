@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:signals_flutter/signals_flutter.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/di/dependency_injection.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
@@ -46,6 +46,14 @@ class PiramidGameApp extends StatelessWidget {
         darkTheme: AppTheme.dark,
         themeMode: themeController.themeMode.value,
         routerConfig: goRouter,
+        // Textos nativos do Flutter (tooltips, DatePicker, botões) em português.
+        locale: const Locale('pt', 'BR'),
+        supportedLocales: const [Locale('pt', 'BR')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
       );
     });
   }

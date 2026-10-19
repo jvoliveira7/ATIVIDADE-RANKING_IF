@@ -9,9 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
-  sqflite_common_ffi: ^2.3.0
-  
   cupertino_icons: ^1.0.8
 
   # Navegação
@@ -22,10 +22,6 @@ dependencies:
 
   # Injeção de dependências
   auto_injector: ^2.1.1
-
-  # Banco de dados SQLite (fonte de dados da parte 1, mantida trocável na DI)
-  sqflite: ^2.3.3
-  path: ^1.9.0
 
   # Comparação por valor nas entidades
   equatable: ^2.0.8

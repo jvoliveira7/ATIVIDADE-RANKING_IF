@@ -84,8 +84,8 @@ class _Legenda extends StatelessWidget implements PreferredSizeWidget {
       child: Text(
         texto,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary.withValues(
-                    alpha: 0.85,
+               color: Theme.of(context).colorScheme.onSurface.withValues(
+                    alpha: 0.7,
                   ),
             ),
       ),

@@ -19,7 +19,7 @@ service cloud.firestore {
       return nota is int && nota >= 1 && nota <= 5;
     }
 
-    // Item 16: nenhuma nota fora de 1..5 e pontuação coerente com a soma.
+       // Item 16: nenhuma nota fora de 1..5 e pontuação igual à soma das notas.
     function notasValidas() {
       let d = request.resource.data;
       return notaValida(d.resenha)
@@ -38,10 +38,13 @@ service cloud.firestore {
         && notaValida(d.cerebroTurbo)
         && notaValida(d.caosControlado)
         && d.pontuacaoTotal is int
-        && d.pontuacaoTotal >= 15
-        && d.pontuacaoTotal <= 75;
+        && d.pontuacaoTotal == d.resenha + d.presencaVip + d.aura
+          + d.modoParceiro + d.carismaNatural + d.humorDeMilhoes
+          + d.energiaDeGrupo + d.criatividadeCaotica + d.modoAtleta
+          + d.talentoDePalco + d.dripEscolar + d.coracaoDeDorama
+          + d.queridinhoProfessores + d.cerebroTurbo + d.caosControlado;
     }
-
+    
     // Itens 9 e 14.12: ninguém avalia a si próprio. O vínculo entre conta e
     // pessoa mora em `pessoas.usuarioUid`.
     function naoEhAutoavaliacao(pessoaId) {
